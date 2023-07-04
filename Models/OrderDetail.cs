@@ -13,5 +13,7 @@ namespace e_commerce_app_api.Models
         public int TotalPrice { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public virtual Order? Order { get; set; }
+        public virtual Product? Product { get; set; }
     }
 }

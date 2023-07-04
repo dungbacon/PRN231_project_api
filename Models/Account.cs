@@ -16,5 +16,7 @@ namespace e_commerce_app_api.Models
         public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
         public virtual Role? Role { get; set; }
+        public virtual List<Order>? Orders { get; set; }
+        public virtual List<Address>? Addresses { get; set; }
     }
 }

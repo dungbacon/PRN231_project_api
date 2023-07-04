@@ -8,16 +8,17 @@ namespace e_commerce_app_api.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
-        public string ProductName { get; set; }
-        public string ProductImg { get; set; }
+        public string? ProductName { get; set; }
+        public string? ProductImg { get; set; }
         public float Rating { get; set; }
         public decimal Price { get; set; }
         public int Discount { get; set; }
         public int StockQuantity { get; set; }
-        public string Description { get; set; }
-        public string Data { get; set; }
+        public string? Description { get; set; }
+        public string? Data { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime ShippedDate { get; set; }
         public bool IsActive { get; set; }
+        public virtual Category? Category { get; set; }
     }
 }

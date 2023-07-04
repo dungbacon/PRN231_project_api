@@ -14,5 +14,9 @@ namespace e_commerce_app_api.Models
         public DateTime OrderDate { get; set; }
         public DateTime ShippedDate { get; set; }
         public bool IsActive { get; set; }
+        public virtual Account? Account { get; set; }
+        public virtual Address? Address { get; set; }
+        public virtual OrderStatus? OrderStatus { get; set; }
+        public virtual List<OrderDetail>? OrderDetails { get; set; }
     }
 }

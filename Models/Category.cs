@@ -11,6 +11,7 @@ namespace e_commerce_app_api.Models
         public DateTime CreateDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
+        public virtual List<Product>? Products { get; set; }
 
     }
 }
