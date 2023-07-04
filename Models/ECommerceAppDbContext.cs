@@ -14,7 +14,6 @@ namespace e_commerce_app_api.Models
         public DbSet<Address> Addresses { get; set; } = null!;
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<OrderStatus> OrderStatuses { get; set; } = null!;
         public DbSet<Account> Accounts { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
@@ -36,6 +35,7 @@ namespace e_commerce_app_api.Models
                 .WithMany()
                 .HasForeignKey(o => o.AddressId)
                 .OnDelete(DeleteBehavior.NoAction);
+
             base.OnModelCreating(modelBuilder);
         }
     }

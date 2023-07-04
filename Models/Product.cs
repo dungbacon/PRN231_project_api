@@ -16,8 +16,8 @@ namespace e_commerce_app_api.Models
         public int StockQuantity { get; set; }
         public string? Description { get; set; }
         public string? Data { get; set; }
-        public DateTime OrderDate { get; set; }
-        public DateTime ShippedDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
         public virtual Category? Category { get; set; }
     }

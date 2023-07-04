@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using e_commerce_app_api.Models;
 
@@ -11,9 +12,10 @@ using e_commerce_app_api.Models;
 namespace e_commerce_app_api.Migrations
 {
     [DbContext(typeof(ECommerceAppDbContext))]
-    partial class ECommerceAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230704140143_second-migration")]
+    partial class secondmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,13 +139,16 @@ namespace e_commerce_app_api.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("OrderStatusStatusId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ShippedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("ShippingFee")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("StatusId")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
@@ -151,6 +156,8 @@ namespace e_commerce_app_api.Migrations
                     b.HasIndex("AccountId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("OrderStatusStatusId");
 
                     b.ToTable("Orders");
                 });
@@ -188,6 +195,32 @@ namespace e_commerce_app_api.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("e_commerce_app_api.Models.OrderStatus", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"), 1L, 1);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("e_commerce_app_api.Models.Product", b =>
@@ -303,9 +336,15 @@ namespace e_commerce_app_api.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("e_commerce_app_api.Models.OrderStatus", "OrderStatus")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusStatusId");
+
                     b.Navigation("Account");
 
                     b.Navigation("Address");
+
+                    b.Navigation("OrderStatus");
                 });
 
             modelBuilder.Entity("e_commerce_app_api.Models.OrderDetail", b =>
