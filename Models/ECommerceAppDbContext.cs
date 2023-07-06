@@ -7,7 +7,7 @@ namespace e_commerce_app_api.Models
         public ECommerceAppDbContext(DbContextOptions options) : base(options)
         {
         }
-        protected ECommerceAppDbContext()
+        public ECommerceAppDbContext()
         {
         }
 
