@@ -1,18 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace e_commerce_app_api.Models
+﻿namespace e_commerce_app_api.DTOs.Request
 {
-    public class Category
+    public class CategoryRequestDTO
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public string? CategoryImg { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
-        public virtual List<Product>? Products { get; set; }
-
     }
 }

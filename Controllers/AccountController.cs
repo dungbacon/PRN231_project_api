@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using e_commerce_app_api.Config;
+﻿using e_commerce_app_api.Config;
 using e_commerce_app_api.DTOs;
 using e_commerce_app_api.DTOs.Request;
 using e_commerce_app_api.DTOs.Response;
@@ -16,16 +15,22 @@ namespace e_commerce_app_api.Controllers
     {
 
         private readonly IAccountRepository repo;
-        private readonly IRoleRepository roleRepo;
         private readonly IConfiguration configuration;
-        private readonly IMapper mapper;
 
-        public AccountController(IAccountRepository _repo, IRoleRepository _roleRepo, IConfiguration _configuration, IMapper _mapper)
+        public AccountController(IAccountRepository _repo, IConfiguration _configuration)
         {
             repo = _repo;
-            roleRepo = _roleRepo;
             configuration = _configuration;
-            mapper = _mapper;
+        }
+
+        [HttpPost("verify")]
+        [Authorize]
+        public async Task<IActionResult> VerifyJwtToken()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            if (string.IsNullOrWhiteSpace(token)) return Unauthorized();
+            var isVerified = JwtConfig.VerifyToken(token, configuration);
+            return isVerified ? Ok() : Unauthorized();
         }
 
         [HttpGet("accounts")]

@@ -42,5 +42,33 @@ namespace e_commerce_app_api.Config
             return jwtSecurityToken.ValidTo > DateTime.UtcNow;
         }
 
+
+        public static bool VerifyToken(string token, IConfiguration config)
+        {
+            if (token.Length == 0) return false;
+            try
+            {
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = config["JWT:Issuer"],
+                    ValidAudience = config["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Secret"])),
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                tokenHandler.ValidateToken(token, validationParameters, out _);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
     }
 }

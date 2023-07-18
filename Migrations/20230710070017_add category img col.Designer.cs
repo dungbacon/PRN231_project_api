@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using e_commerce_app_api.Models;
 
@@ -11,9 +12,10 @@ using e_commerce_app_api.Models;
 namespace e_commerce_app_api.Migrations
 {
     [DbContext(typeof(ECommerceAppDbContext))]
-    partial class ECommerceAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230710070017_add category img col")]
+    partial class addcategoryimgcol
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
