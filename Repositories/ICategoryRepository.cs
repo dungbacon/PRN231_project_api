@@ -7,7 +7,7 @@ namespace e_commerce_app_api.Repositories
     {
         Task<List<CategoryResponseDTO>> GetList();
         Task<CategoryResponseDTO> AddItem(CategoryRequestDTO item);
-        Task<CategoryResponseDTO> UpdateItem(CategoryRequestDTO item, int id);
+        Task<CategoryResponseDTO> UpdateItem(CategoryUpdateRequestDTO item, int id);
         Task DeleteItem(int id);
     }
 }

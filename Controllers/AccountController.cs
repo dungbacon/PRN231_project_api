@@ -92,15 +92,38 @@ namespace e_commerce_app_api.Controllers
 
         [HttpPut("update/{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdateProfile([FromBody] AccountDTO account, int id)
+        public async Task<IActionResult> UpdateProfile([FromBody] AccountRequestUpdateDTO account, int id)
         {
-            var _item = await repo.GetAccountById(id);
-            if (_item == null)
+
+            var getAccountByIdTask = await repo.GetAccountById(id);
+
+            if (getAccountByIdTask == null)
             {
                 return NotFound("No user found!");
             }
+
             var item = await repo.UpdateAccount(account, id);
             return Ok(item);
+        }
+
+        [HttpGet("{accountId}")]
+        [Authorize]
+        public async Task<IActionResult> GetAccountOrdersById(int accountId)
+        {
+            try
+            {
+                var item = await repo.GetAccountById(accountId);
+                if (item == null)
+                {
+                    return NotFound("No account found!");
+                }
+                return Ok(item);
+            }
+            catch (Exception e)
+            {
+                return Conflict(e.Message);
+            }
+
         }
     }
 }

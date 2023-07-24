@@ -4,8 +4,5 @@
     {
         public int AccountId { get; set; }
         public string? AddressDesc { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
-        public bool IsActive { get; set; }
     }
 }

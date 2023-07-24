@@ -1,4 +1,5 @@
-﻿using e_commerce_app_api.Models;
+﻿using e_commerce_app_api.DTOs.Request;
+using e_commerce_app_api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace e_commerce_app_api.DAO
@@ -37,7 +38,7 @@ namespace e_commerce_app_api.DAO
             return list;
         }
 
-        public async Task<Category> AddItem(Category item)
+        public async Task<Category?> AddItem(Category item)
         {
             try
             {
@@ -51,26 +52,34 @@ namespace e_commerce_app_api.DAO
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return null;
+
             }
-            return null;
         }
 
-        public async Task<Category> UpdateItem(Category item, int id)
+        public async Task<Category?> UpdateItem(CategoryUpdateRequestDTO input, int id)
         {
             try
             {
                 using (var ctx = new ECommerceAppDbContext())
                 {
-                    ctx.Entry<Category>(item).State = EntityState.Modified;
+                    var item = await ctx.Categories.FirstOrDefaultAsync(s => s.CategoryId == id && s.IsActive == true);
+                    if (item != null)
+                    {
+                        item.CategoryName = input.CategoryName;
+                        item.CategoryImg = input.CategoryImg;
+                        item.UpdatedDate = DateTime.Now;
+                    }
+                    ctx.Entry<Category>(item!).State = EntityState.Modified;
                     await ctx.SaveChangesAsync();
-                    return await ctx.Categories.Where(s => s.CategoryId == item.CategoryId && s.IsActive == true).FirstOrDefaultAsync();
+                    return item;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return null;
             }
-            return null;
         }
 
         public async Task DeleteItem(int id)
@@ -81,7 +90,11 @@ namespace e_commerce_app_api.DAO
                 using (var ctx = new ECommerceAppDbContext())
                 {
                     item = await ctx.Categories.Where(s => s.CategoryId == id).FirstOrDefaultAsync();
-                    item.IsActive = false;
+                    if (item != null)
+                    {
+                        item.IsActive = false;
+
+                    }
                     await ctx.SaveChangesAsync();
                 }
             }

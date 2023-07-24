@@ -83,7 +83,7 @@ namespace e_commerce_app_api.DAO
             return item;
         }
 
-        public async Task<Product> AddItem(Product item)
+        public async Task<Product?> AddItem(Product item)
         {
             try
             {
@@ -91,6 +91,7 @@ namespace e_commerce_app_api.DAO
                 {
                     item.CreateDate = DateTime.Now;
                     item.UpdatedDate = DateTime.Now;
+                    item.IsActive = true;
                     ctx.Products.Add(item);
                     await ctx.SaveChangesAsync();
                     return await ctx.Products.Where(s => s.ProductId == item.ProductId && s.IsActive == true).FirstOrDefaultAsync();
@@ -99,8 +100,8 @@ namespace e_commerce_app_api.DAO
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return null;
             }
-            return null;
         }
 
         public async Task<Product> UpdateItem(Product item, int id)

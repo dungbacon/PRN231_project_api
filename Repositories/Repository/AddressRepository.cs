@@ -17,6 +17,9 @@ namespace e_commerce_app_api.Repositories.Repository
         public async Task<AddressResponseDTO> AddAddress(AddressRequestDTO input)
         {
             var a = mapper.Map<Address>(input);
+            a.CreateDate = DateTime.Now;
+            a.UpdatedDate = DateTime.Now;
+            a.IsActive = true;
             return mapper.Map<AddressResponseDTO>(await AddressDAO.Instance.AddAddress(a));
         }
 

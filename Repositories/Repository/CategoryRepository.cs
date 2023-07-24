@@ -25,10 +25,9 @@ namespace e_commerce_app_api.Repositories.Repository
 
         public async Task<List<CategoryResponseDTO>> GetList() => mapper.Map<List<CategoryResponseDTO>>(await CategoryDAO.Instance.GetList());
 
-        public async Task<CategoryResponseDTO> UpdateItem(CategoryRequestDTO item, int id)
+        public async Task<CategoryResponseDTO> UpdateItem(CategoryUpdateRequestDTO item, int id)
         {
-            var cate = mapper.Map<Category>(item);
-            return mapper.Map<CategoryResponseDTO>(await CategoryDAO.Instance.UpdateItem(cate, id));
+            return mapper.Map<CategoryResponseDTO>(await CategoryDAO.Instance.UpdateItem(item, id));
         }
     }
 }

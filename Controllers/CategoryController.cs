@@ -45,7 +45,7 @@ namespace e_commerce_app_api.Controllers
 
         [HttpPut("update/{id}")]
         [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> UpdateItem([FromBody] CategoryRequestDTO req, int id)
+        public async Task<IActionResult> UpdateItem([FromBody] CategoryUpdateRequestDTO req, int id)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace e_commerce_app_api.Controllers
             }
         }
 
-        [HttpPut("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteItem(int id)
         {

@@ -26,7 +26,7 @@ namespace e_commerce_app_api.DAO
             {
                 using (var ctx = new ECommerceAppDbContext())
                 {
-                    var list = await ctx.Addresses.ToListAsync();
+                    var list = await ctx.Addresses.Where(s => s.IsActive == true).ToListAsync();
                     return list;
                 }
             }
@@ -43,7 +43,7 @@ namespace e_commerce_app_api.DAO
             {
                 using (var ctx = new ECommerceAppDbContext())
                 {
-                    var list = await ctx.Addresses.Where(s => s.AccountId == customerId).ToListAsync();
+                    var list = await ctx.Addresses.Where(s => s.AccountId == customerId && s.IsActive == true).ToListAsync();
                     return list;
                 }
             }
@@ -60,7 +60,7 @@ namespace e_commerce_app_api.DAO
             {
                 using (var ctx = new ECommerceAppDbContext())
                 {
-                    var item = await ctx.Addresses.Where(s => s.AddressId == addressId).FirstOrDefaultAsync();
+                    var item = await ctx.Addresses.Where(s => s.AddressId == addressId && s.IsActive == true).FirstOrDefaultAsync();
                     return item;
                 }
             }
@@ -81,7 +81,7 @@ namespace e_commerce_app_api.DAO
                     input.UpdatedDate = DateTime.Now;
                     ctx.Addresses.Add(input);
                     await ctx.SaveChangesAsync();
-                    return await ctx.Addresses.Where(s => s.AddressId == input.AddressId).FirstOrDefaultAsync();
+                    return await ctx.Addresses.Where(s => s.AddressId == input.AddressId && s.IsActive == true).FirstOrDefaultAsync();
                 }
             }
             catch (Exception e)
@@ -99,7 +99,7 @@ namespace e_commerce_app_api.DAO
                     input.UpdatedDate = DateTime.Now;
                     ctx.Entry<Address>(input).State = EntityState.Modified;
                     await ctx.SaveChangesAsync();
-                    return await ctx.Addresses.Where(s => s.AddressId == input.AddressId).FirstOrDefaultAsync();
+                    return await ctx.Addresses.Where(s => s.AddressId == input.AddressId && s.IsActive == true).FirstOrDefaultAsync();
                 }
             }
             catch (Exception e)
@@ -115,8 +115,9 @@ namespace e_commerce_app_api.DAO
             {
                 using (var ctx = new ECommerceAppDbContext())
                 {
-                    var item = await ctx.Addresses.FirstOrDefaultAsync(s => s.AddressId == id);
-                    ctx.Addresses.Remove(item);
+                    var item = await ctx.Addresses.FirstOrDefaultAsync(s => s.AddressId == id && s.IsActive == true);
+                    item.IsActive = false;
+                    ctx.Entry<Address>(item).State = EntityState.Modified;
                     await ctx.SaveChangesAsync();
                 }
             }

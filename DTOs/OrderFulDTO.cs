@@ -1,16 +1,14 @@
-﻿namespace e_commerce_app_api.DTOs.Response
+﻿namespace e_commerce_app_api.DTOs
 {
-    public class OrderResponseDTO
+    public class OrderFulDTO
     {
         public int OrderId { get; set; }
         public int AccountId { get; set; }
-        public string? Address { get; set; }
-        public string Status { get; set; }
+        public int AddressId { get; set; }
+        public int Status { get; set; }
         public decimal ShippingFee { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime ShippedDate { get; set; }
-        public int TotalPrice { get; set; }
         public bool IsActive { get; set; }
-
     }
 }
